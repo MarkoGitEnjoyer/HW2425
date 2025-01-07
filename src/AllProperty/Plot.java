@@ -3,25 +3,24 @@ package AllProperty;
 public class Plot extends Property{
     public enum TYPE {URBAN,AGRICULTURAL,INDUSTRIAL};
     protected static final double arr[] = {0.1,0.02,0.05};
-    protected int type;
+    protected TYPE type;
 
 
-    public Plot(String address, double area, double price, int type) {
+    public Plot(String address, double area, double price, TYPE type) {
         super(address, area, price);
         setType(type);
     }
 
     @Override
     public void taxlt() {
-        System.out.println(price*arr[type]);
+        System.out.println(price*arr[type.ordinal()]);
     }
 
-    public int getType() {
+    public TYPE getType() {
         return type;
     }
 
-    public void setType(int type) {
-        if(type<0){return;}
+    public void setType(TYPE type) {
         this.type = type;
     }
 

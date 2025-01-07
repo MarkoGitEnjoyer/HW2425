@@ -9,8 +9,8 @@ public class DataManager {
     {
         ArrayList<Property> properties = new ArrayList<>();
 
-        properties.add(new Plot("Plot, 1",1.1,1,1));
-        properties.add(new Plot("Plot, 2",1.2,2,2));
+        properties.add(new Plot("Plot, 1",1.1,1, Plot.TYPE.URBAN));
+        properties.add(new Plot("Plot, 2",1.2,2,Plot.TYPE.AGRICULTURAL));
         properties.add(new Apartment("Apartment, 1",2.1,3,2,3));
         properties.add(new Apartment("Apartment, 2",2.2,4,4,5));
         properties.add(new Villa("Villa, 1",3.1,5,6,7));

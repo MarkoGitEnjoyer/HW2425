@@ -27,11 +27,12 @@ public abstract class Property {
 
     public void setAddress(String address)
     {
-        if(address==null||address == " ")
+        if(address==null||address.isEmpty()||address.isBlank())
         {
             return;
         }
         int count = 1;
+        address = address.trim();
         char ch = address.charAt(0);
         for (int i = 1; i < address.length(); i++) {
             if(address.charAt(i)!=' '&&ch==' ')
