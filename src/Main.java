@@ -52,25 +52,27 @@ public class Main {
         System.out.println("Total Commercial Yield: " + totalYield);
     }
 
-    private static boolean containsCity(String cityInput,Property property)
-    {
-        String city = cityInput.replaceAll("[-]", " ").toLowerCase();
-        cityInput.trim(); // מוחק רווחים
-        return property.getAddress().contains(cityInput);
-    }
-    private static void propertiesByCity(String cityInput) {
+    private static boolean containsCity(String cityInput, Property property) {
+        String fixedInput = cityInput.replaceAll("[-]", " ").trim().toLowerCase();
+        String city = extractCityFromAddress(property.getAddress());
 
-        ArrayList<Property> properties = new ArrayList<>();
+        return city.contains(fixedInput);
+    }
+
+    private static void propertiesByCity(String cityInput) {
+        ArrayList<Property> matchedProperties = new ArrayList<>();
+
         for (Property property : RealEstateManager.getProperties()) {
-            if (containsCity(cityInput,property)) {
-                properties.add(property);
+            if (containsCity(cityInput, property)) {
+                matchedProperties.add(property);
             }
         }
 
-        if (properties.isEmpty()) {
+        if (matchedProperties.isEmpty()) {
             System.out.println("No properties found in the specified city.");
         } else {
-            for (Property property : properties) {
+            System.out.println("Properties in " + cityInput + ":");
+            for (Property property : matchedProperties) {
                 System.out.println(property);
             }
         }
@@ -80,9 +82,8 @@ public class Main {
         HashSet<String> cities = new HashSet<>();
 
         for (Property property : RealEstateManager.getProperties()) {
-            String address = property.getAddress();
-            if (address != null && !address.isEmpty()) {
-                String city = address.split(",")[0].trim().replaceAll("[-]", " ").toLowerCase(); // סיבכת אותי
+            String city = extractCityFromAddress(property.getAddress());
+            if (!city.isEmpty()) {
                 cities.add(city);
             }
         }
@@ -90,6 +91,16 @@ public class Main {
         System.out.println("Number of different cities: " + cities.size());
         System.out.println("Cities: " + String.join(", ", cities));
     }
+
+    private static String extractCityFromAddress(String address) {
+        if (address == null || address.isEmpty()) {
+            return "";
+        }
+
+        String[] parts = address.split(",", 2);
+        return parts[0].replaceAll("[-]", " ").trim().toLowerCase();
+    }
+
 
     public static int getChoice(int n) throws myMissmatchInput {
         if(n>5||n<-1||n==0){
